@@ -4,9 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var routes = require('./routes');
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
-
 var app = express();
 
 // view engine setup
