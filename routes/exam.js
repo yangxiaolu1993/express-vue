@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
 
+var lifeCode = require('../public/javascripts/lifeCode')
+
 var MongoClient = require("mongodb").MongoClient;
 var url = "mongodb://localhost:27017/";
 
 router.get("/", function(req, res, next) {
-  console.log("测试");
   MongoClient.connect(
     url,
     {
@@ -29,5 +30,8 @@ router.get("/", function(req, res, next) {
     }
   );
 });
+
+
+
 
 module.exports = router;
