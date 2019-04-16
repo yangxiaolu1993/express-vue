@@ -44,7 +44,6 @@ router.get("/list", function(req, res, next) {
             }
             
           });
-          console.log(resulteData)
           data.list = resulteData;
         });
       dbo.collection("friends")
@@ -54,7 +53,6 @@ router.get("/list", function(req, res, next) {
         })
         .toArray((err, result) => {
           data.total = result.length;
-          // console.log(data)
           res.json(data);
         });
     }
@@ -100,8 +98,10 @@ router.get("/add", (req, res, next) => {
         slave_user_id: req.headers.userid
       };
       dbo.collection("friends").insertOne(data, function(err, result) {
-        console.log("插入成功!");
-        res.json(result);
+        res.json({
+          code:200,
+          data:'删除成功！'
+        });
         db.close();
       });
     }
@@ -112,7 +112,6 @@ router.get("/add", (req, res, next) => {
  * ===================================== 删除好友 ==================================
  */
 router.get("/delete", (req, res, next) => {
-  console.log(req.query)
   var query  = req.query.id
   MongoClient.connect(url,{useNewUrlParser: true},function(err, db) {
     if (err) throw err;

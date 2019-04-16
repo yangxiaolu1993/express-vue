@@ -3,6 +3,7 @@ var identityRouter = require('./routes/identity');
 var reportRouter = require('./routes/report');
 var friendsRouter = require('./routes/friends');
 var examRouter = require('./routes/exam');
+var userRouter = require('./routes/user');
 
 function routes(app){
     app.use('/', indexRouter);
@@ -10,6 +11,7 @@ function routes(app){
     app.use('/report',reportRouter);
     app.use('/friends',friendsRouter);
     app.use('/exam',examRouter);
+    app.use('/user',userRouter);
     
     app.all('*', function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
