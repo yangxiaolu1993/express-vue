@@ -15,22 +15,20 @@ router.get("/code/reading", function(req, res, next) {
     birth = "";
 
   MongoClient.connect(
-    url,
-    {
-      useNewUrlParser: true
-    },
-    function(err, db) {
+    url,{useNewUrlParser: true},function(err, db) {
       if (err) throw err;
       var dbo = db.db("mimapai");
 
       //获取生日
-      dbo
-        .collection("friends")
+      dbo.collection("friends")
         .find({
           user_id: id
         })
         .toArray(function(err, result) {
           birth = result[0].birthday;
+          console.log(result)
+          resData.nickname = result[0].name
+          resData.label = result[0].master_code_description
         });
 
       dbo

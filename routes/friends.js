@@ -32,6 +32,7 @@ router.get("/list", function(req, res, next) {
         .limit(pageSize)
         .toArray((err, result) => {
           var resulteData = []
+          
           result.forEach(item => {
             if(item.status == 1){
               let num = (''+item._id).substring((''+item._id).length-4)
@@ -44,6 +45,7 @@ router.get("/list", function(req, res, next) {
             }
             
           });
+          // console.log(resulteData)
           data.list = resulteData;
         });
       dbo.collection("friends")
