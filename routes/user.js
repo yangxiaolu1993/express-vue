@@ -8,8 +8,6 @@ var lifeCode = require("../public/javascripts/lifeCode");
  * 密码解读
  */
 router.get("/code/reading", function(req, res, next) {
-  console.log(req.query);
-
   var resData = {},
     id = req.query.id,
     birth = "";
@@ -26,7 +24,6 @@ router.get("/code/reading", function(req, res, next) {
         })
         .toArray(function(err, result) {
           birth = result[0].birthday;
-          console.log(result)
           resData.nickname = result[0].name
           resData.label = result[0].master_code_description
         });
@@ -35,7 +32,6 @@ router.get("/code/reading", function(req, res, next) {
         .collection("mini_report_detail")
         .find()
         .toArray(function(err, result) {
-          // console.log(result)
           var detail = result;
           var [character, external, inner, talent, emotion] = [...detail];
 

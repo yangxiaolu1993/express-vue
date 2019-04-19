@@ -53,4 +53,29 @@ router.get("/fortune_report/detail", function(req, res, next) {
   })
 });
 
+//关联报告
+router.get("/link", function(req, res, next) {
+  
+  var reportId = parseInt(req.query.reportId);
+  var resultData = []
+  MongoClient.connect(url, {
+    useNewUrlParser: true
+  }, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db('mimapai')
+    dbo.collection('deep_report').find().toArray(function(err,result){
+      result.forEach((item)=>{
+        delete item._id
+        if(item.id != reportId){
+          resultData.push(item)
+        }
+      })
+      
+      res.json(resultData)
+      db.close();
+    })
+    
+  })
+})
+
 module.exports = router;
