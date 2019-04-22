@@ -53,6 +53,48 @@ router.get("/fortune_report/detail", function(req, res, next) {
   })
 });
 
+//大报告详情
+router.get("/deep_report/detail", function(req, res, next) {
+
+  var reportId = req.query.report_id;
+  var userId = req.headers.userid;
+  var info = {};
+  var fleet=1;
+
+  MongoClient.connect(url, {
+    useNewUrlParser: true
+  }, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db('mimapai')
+
+    dbo.collection('life_code').find({
+      'user_id': userId
+    }).toArray(function(err,result){
+      info = Object.assign({},result[0],info)
+      fleet = result[0].fleet_time
+    })
+    
+    dbo.collection('deep_report_detail').find({
+      'id': reportId
+    }).toArray(function (err, result) {
+      let lead = ""
+
+      result[0].lead_languages.forEach((item)=>{
+        lead += item+'<br>'
+      })
+      result[0].lead_languages = lead
+      result[0].special_text_map = eval("("+result[0].special_text_map+")")
+      info = Object.assign({},info,result[0])
+
+      delete info._id
+
+        res.json(info)
+        db.close();
+    })
+
+  })
+})
+
 //关联报告
 router.get("/link", function(req, res, next) {
   
